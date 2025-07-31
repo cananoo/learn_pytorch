@@ -22,7 +22,7 @@ test_loader = DataLoader(test_data,64)
 
 train_steps = 0
 test_steps = 0
-epoch = 10
+epoch = 20
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 class Model(torch.nn.Module):
@@ -69,7 +69,6 @@ for i in range(epoch):
         loss.backward()
         optimizer.step()
         train_steps += 1
-    torch.save(model,'model_{}_epoch.pth')
 
     total_test_loss = 0
     total_accuracy = 0
@@ -88,6 +87,6 @@ for i in range(epoch):
     writer.add_scalar('test_loss',total_test_loss,i+1)
     print("整体的测试loss值为{}".format(total_test_loss))
     print("整体的测试准确率为{}".format(total_accuracy/len(test_data)))
-    print('模型已保存')
-
+torch.save(model,'model.pth')
+print('模型已保存')
 writer.close()
